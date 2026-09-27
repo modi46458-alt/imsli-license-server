@@ -1,11 +1,11 @@
-import { resolve } from 'node:path';
+import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-  resolve: { alias: { '@': resolve(import.meta.dirname, 'src') } },
+  plugins: [react()],
   test: {
-    environment: 'jsdom',
-    include: ['src/**/*.test.ts', 'src/**/*.test.tsx'],
-    restoreMocks: true,
+    environment: 'node', // admin-ui tests opt into jsdom per file
+    include: ['test/**/*.test.ts', 'admin-ui/src/**/*.test.tsx'],
+    testTimeout: 20_000,
   },
 });

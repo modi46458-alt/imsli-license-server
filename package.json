@@ -1,46 +1,45 @@
 {
-  "name": "indiamart-smart-lead-intelligence",
-  "private": true,
+  "name": "imsli-license-server",
   "version": "0.6.1",
-  "description": "Lead intelligence for IndiaMART Lead Manager: scanning, scoring, and safe user-controlled actions.",
+  "private": true,
+  "description": "License server and admin panel for IndiaMART Smart Lead Intelligence.",
   "type": "module",
-  "scripts": {
-    "dev": "vite build --watch --mode development",
-    "build": "npm run build:app && npm run build:content",
-    "build:app": "vite build",
-    "build:content": "vite build --config vite.content.config.ts",
-    "typecheck": "tsc --noEmit -p tsconfig.json && tsc -p tsconfig.node.json && npm --prefix server run typecheck",
-    "lint": "eslint .",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "test": "vitest run && npm --prefix server test",
-    "test:watch": "vitest",
-    "validate": "npm run typecheck && npm run lint && npm run test && npm run build",
-    "bench": "vitest run --config vitest.bench.config.ts",
-    "test:extension": "vitest run",
-    "test:server": "npm --prefix server test"
+  "engines": {
+    "node": ">=20"
   },
-  "devDependencies": {
-    "@eslint/js": "^10.0.1",
-    "@tailwindcss/vite": "^4.3.3",
-    "@types/chrome": "^0.3.0",
-    "@types/node": "^26.6.2",
-    "@types/react": "^19.3.0",
-    "@types/react-dom": "^19.3.0",
-    "@vitejs/plugin-react": "^6.1.1",
-    "eslint": "^10.11.0",
-    "eslint-plugin-react-hooks": "^7.1.1",
-    "globals": "^17.12.0",
-    "jsdom": "^30.1.1",
-    "prettier": "^3.9.9",
-    "tailwindcss": "^4.3.3",
-    "typescript": "^6.0.3",
-    "typescript-eslint": "^8.70.1",
-    "vite": "^8.3.1",
-    "vitest": "^5.0.1"
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc -p tsconfig.build.json && npm run build:admin",
+    "start": "node dist/server.js",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p admin-ui/tsconfig.json",
+    "admin:key": "tsx src/cli/admin-key.ts",
+    "build:admin": "vite build --config admin-ui/vite.config.ts",
+    "dev:admin": "vite build --watch --mode development --config admin-ui/vite.config.ts",
+    "dev:panel": "npm run build:admin && tsx src/dev-memory.ts"
   },
   "dependencies": {
+    "express": "^5.2.1",
+    "mongoose": "^9.10.2",
+    "ws": "^8.22.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@types/supertest": "^7.2.1",
+    "@types/ws": "^8.18.1",
+    "@vitejs/plugin-react": "^6.1.1",
+    "jsdom": "^30.1.1",
     "react": "^19.3.0",
-    "react-dom": "^19.3.0"
+    "react-dom": "^19.3.0",
+    "supertest": "^7.3.0",
+    "tailwindcss": "^4.3.3",
+    "tsx": "^4.23.15",
+    "typescript": "^6.0.3",
+    "vite": "^8.3.1",
+    "vitest": "^5.0.2"
   }
 }
